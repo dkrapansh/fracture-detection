@@ -2,23 +2,25 @@
 
 ## Overview
 
-This project implements a deep learning based system for automatic bone fracture detection from X-ray images using Convolutional Neural Networks.
-The model is trained on the MURA (Musculoskeletal Radiographs) dataset and uses a ResNet50 architecture to classify body parts and detect fractures.
+This project implements a deep learning based system for detecting bone fractures from X-ray images using Convolutional Neural Networks.
+The model is trained on the MURA (Musculoskeletal Radiographs) dataset and uses a ResNet50 architecture for image classification.
 
-The goal of the project is to explore how modern computer vision techniques can assist medical diagnosis by providing fast and reliable fracture detection from radiographic images.
+The goal of this project is to understand the full pipeline of a medical image classification system, including dataset processing, model training, fracture detection, and GUI-based prediction.
 
 The system performs two-stage prediction:
 
-1. Predict the body part (Elbow / Hand / Shoulder)
-2. Detect fracture for the predicted body part using a dedicated model
+1. Detect body part (Elbow / Hand / Shoulder)
+2. Detect fracture using a model trained specifically for that bone
 
-A graphical user interface (GUI) is provided to allow users to upload X-ray images and view predictions.
+A graphical user interface (GUI) is included to allow testing predictions on X-ray images.
+
+This repository contains my reproduction and experimentation with this fracture detection pipeline.
 
 ---
 
 ## Dataset
 
-The project uses the MURA dataset, a large collection of musculoskeletal radiographs.
+The project uses the MURA dataset, a large dataset of musculoskeletal radiographs.
 
 Total images used in this project: ~20,000
 
@@ -27,8 +29,6 @@ Total images used in this project: ~20,000
 | Elbow    | 3160   | 2236      | 5396  |
 | Hand     | 4330   | 1673      | 6003  |
 | Shoulder | 4496   | 4440      | 8936  |
-
-Each image belongs to a patient study folder, and the dataset is split into training, validation, and test sets.
 
 Dataset structure:
 
@@ -39,46 +39,53 @@ Dataset/
 ├── Hand/
 ├── Shoulder/
 
+Each image belongs to a patient study folder.
+
 ---
 
 ## Model Architecture
 
-The system uses ResNet50 as the backbone CNN.
+The project uses ResNet50 as the backbone CNN.
 
 Pipeline:
 
 1. Image preprocessing and augmentation
 2. Body part classification using ResNet50
-3. Load specific fracture detection model
+3. Load fracture detection model for that body part
 4. Binary classification (fracture / normal)
 5. Display result in GUI
 
-
+This two-stage approach improves performance by using a specialized model for each bone type.
 
 Why ResNet50:
 
-* strong performance on image classification
-* deep residual connections
-* good transfer learning support
-* widely used in medical imaging
+* Strong performance for image classification
+* Supports transfer learning
+* Good for medical imaging tasks
+* Stable training behavior
 
 ---
 
-## Training Process
+## Training Pipeline
+
+Training scripts included:
+
+training_parts.py
+training_fracture.py
 
 Steps:
 
-* Load dataset
-* Label images automatically from folder names
-* Apply augmentation (flip, brightness, contrast)
-* Split into train / validation / test
+* Load images from dataset folders
+* Assign labels automatically
+* Apply augmentation
 * Train body part classifier
-* Train fracture detection models for each bone
+* Train fracture classifier for each bone
 * Save trained weights
 
-Models saved in:
+Weights stored in:
 
 weights/
+
 ResNet50_BodyParts.h5
 ResNet50_Elbow_frac.h5
 ResNet50_Hand_frac.h5
@@ -88,23 +95,17 @@ ResNet50_Shoulder_frac.h5
 
 ## Results
 
-Body Part Classification Accuracy: ~92%
+During experiments, the model achieved around 90–92% accuracy depending on bone type.
 
-Fracture Detection Accuracy:
+Performance varies due to dataset size and hardware limitations.
 
-* Elbow ~90%
-* Hand ~91%
-* Shoulder ~92%
-
-
-
-These results show that deep learning models can successfully detect bone fractures from X-ray images with high accuracy.
+These results demonstrate that deep learning models can successfully learn fracture patterns from X-ray images.
 
 ---
 
 ## GUI Application
 
-The project includes a GUI built using CustomTkinter.
+GUI built using CustomTkinter.
 
 Features:
 
@@ -112,9 +113,7 @@ Features:
 * Predict body part
 * Detect fracture
 * Show result
-* Show confidence
-
-
+* Display confidence
 
 Run GUI:
 
@@ -124,9 +123,7 @@ python mainGUI.py
 
 ## Installation
 
-Requirements:
-
-Python 3.7+
+Python 3.10 – 3.12 recommended
 
 Install dependencies:
 
@@ -146,32 +143,27 @@ pillow
 
 ---
 
-## Future Improvements
+## Purpose of this Project
 
-* Improve accuracy using better fine-tuning
-* Use larger input resolution
-* Add more augmentation
-* Add more bone types
-* Improve GUI design
-* Add web interface
+This project was used to study and reproduce a deep learning based fracture detection system and to understand:
 
----
+* Medical image classification
+* Transfer learning with ResNet50
+* Dataset preprocessing
+* Model training
+* GUI integration
+* Prediction pipeline
 
-## Motivation
+Future work may include:
 
-This project was built to explore how deep learning can be applied to medical image classification and to understand the full pipeline from dataset processing to model training and GUI deployment.
-
-The project demonstrates practical knowledge of:
-
-* Computer Vision
-* Deep Learning
-* TensorFlow / Keras
-* Medical datasets
-* GUI development
-* Model deployment
+* Better training pipeline
+* Higher accuracy models
+* Improved GUI
+* Web interface
+* More bone types
 
 ---
 
 ## Author
-
-Krapansh Dubey 
+Krapansh Dubey
+This repository contains my experimentation and study of fracture detection using deep learning and the MURA dataset.
