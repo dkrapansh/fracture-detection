@@ -123,7 +123,7 @@ python mainGUI.py
 
 ## Installation
 
-Python 3.10 – 3.12 recommended
+Python 3.7  recommended, to be compatible with TensorFlow 2.6
 
 Install dependencies:
 
@@ -166,4 +166,5 @@ Future work may include:
 
 ## Author
 Krapansh Dubey
+
 This repository contains my experimentation and study of fracture detection using deep learning and the MURA dataset.
