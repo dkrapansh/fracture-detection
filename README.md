@@ -113,7 +113,6 @@ Features:
 * Predict body part
 * Detect fracture
 * Show result
-* Display confidence
 
 Run GUI:
 
